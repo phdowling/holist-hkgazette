@@ -5,7 +5,7 @@ from backend.core.model.Document import Document
 from backend.util import config
 
 
-DEBUG = True
+DEBUG = False
 if DEBUG:
     import logging
     logging.basicConfig()
@@ -16,9 +16,9 @@ else:
 
 import csv
 
-GAZETTE_DATA_ROOT_PATH = "../scmp-gazette/"
+GAZETTE_DATA_ROOT_PATH = "/var/data/hongkong/gazette/"
 GAZETTE_METADATA_FILE = GAZETTE_DATA_ROOT_PATH + "all.gazette.csv"
-RAW_TEXTS_PATH = GAZETTE_DATA_ROOT_PATH + "raw_texts/"
+RAW_TEXTS_PATH = GAZETTE_DATA_ROOT_PATH + "text/"
 
 PERSISTENCE_FILE = "persist/gazette_retrieved.txt"
 
@@ -38,7 +38,7 @@ class GazetteDataSource(IDataSource):
         try:
             filenames = [RAW_TEXTS_PATH + fname[:-4] + ".txt" for fname in document_dict["filename"].split("|")]
         except KeyError:
-            ln.warn("Metadata entry has no filename! Other fields are: %s" % document_dict)
+            #ln.warn("Metadata entry has no filename! Other fields are: %s" % document_dict)
             return None
 
         texts = []
