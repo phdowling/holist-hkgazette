@@ -1,0 +1,22 @@
+# show elasticsearch indexes
+curl 'localhost:9200/_cat/indices?v'
+
+# drop elasticsearch indexes
+curl -XDELETE 'http://localhost:9200/holist-gazette.documents/'
+
+# query elasticsearch. replace "holist-gazette.documents" with another index if necessary and "text" with another field
+curl -XPOST "http://localhost:9200/holist-gazette.documents/_search" -d '{
+  "query": {
+    "match": {
+      "text": {
+        "query": "Contracts",
+        "fuzziness": 2,
+        "prefix_length": 1
+      }
+    }
+  }
+}'
+
+# start mongoconnector
+mongo-connector -m localhost:27017 -t localhost:9200 -d /usr/local/lib/python2.7/dist-packages/mongo_connector/doc_managers/elastic_doc_manager.py -o connectorOplogProgress.txt
+
