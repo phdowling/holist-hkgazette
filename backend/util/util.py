@@ -103,10 +103,13 @@ def __refreshLog(name):
 
 
 def moduleApiRequest(moduleName):
+    """
+    create a decorator that adds basic logging, enables remote access for a resource, and sets the content-type to json
+    """
     ln_ = getModuleLogger(moduleName)
     def apiRequest_(render_func):
         """
-        decorator that enables remote access for a resource, and sets the content-type to json
+        decorator that adds basic logging, enables remote access for a resource, and sets the content-type to json
         """
         def wrapped_render(self, request):
             ln_.debug("Got request from %s for %s, args=%s" % (request.getClientIP(), request.uri, request.args))

@@ -1,5 +1,3 @@
-__author__ = 'raoulfriedrich'
-
 from backend.util.util import *
 ln = getModuleLogger(__name__)
 
@@ -12,10 +10,8 @@ from twisted.internet import reactor
 
 class RESTfulApi(object):
 
-    def __init__(self, controller):
-        self.controller = controller
-
-        self.root = File("./holist-web")
+    def __init__(self):
+        self.root = File("web")
         self.api = Resource()
         self.root.putChild("api", self.api)
 

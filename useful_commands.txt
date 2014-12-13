@@ -1,3 +1,12 @@
+#start mongodb
+sudo mongod --config /etc/mongodb.conf
+
+#start elasticsearch
+sudo /etc/init.d/elasticsearch start
+
+# start mongoconnector
+mongo-connector -m localhost:27017 -t localhost:9200 -d /usr/local/lib/python2.7/dist-packages/mongo_connector/doc_managers/elastic_doc_manager.py -o connectorOplogProgress.txt
+
 # show elasticsearch indexes
 curl 'localhost:9200/_cat/indices?v'
 
@@ -17,6 +26,7 @@ curl -XPOST "http://localhost:9200/holist-gazette.documents/_search" -d '{
   }
 }'
 
-# start mongoconnector
-mongo-connector -m localhost:27017 -t localhost:9200 -d /usr/local/lib/python2.7/dist-packages/mongo_connector/doc_managers/elastic_doc_manager.py -o connectorOplogProgress.txt
+
+
+
 
