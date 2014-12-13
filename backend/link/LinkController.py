@@ -28,7 +28,7 @@ class LinkController(object):
         #self.nodeCommunicator.registerWithNode(CORE_IP, REGISTER_PORT)
 
         # init rest apis
-        self.frontend = RESTfulApi(self)
+        self.frontend = RESTfulApi()
 
         self.corpus = MongoDBCorpus()
         self.strategies = strategies
