@@ -1,0 +1,9 @@
+pymongo >= 2.1
+numpy
+scipy
+requests
+stemming
+gensim
+nltk
+twisted
+redis
