@@ -1,6 +1,6 @@
 from backend.util import util
 from backend.link.LinkController import LinkController
-from plugin.link.strategies.ElasticsearchStrategy import ElasticearchStrategy
+from plugin.link.strategy.ElasticsearchStrategy import ElasticearchStrategy
 
 __author__ = ['raoulfriedrich', 'dowling']
 
