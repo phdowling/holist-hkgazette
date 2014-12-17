@@ -1,4 +1,4 @@
-from backend.link.strategy import ILinkStrategy
+from backend.link.strategy.ILinkStrategy import ILinkStrategy
 
 __author__ = 'dowling'
 from backend.util.util import *

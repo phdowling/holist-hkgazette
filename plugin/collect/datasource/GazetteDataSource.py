@@ -24,6 +24,7 @@ PERSISTENCE_FILE = "persist/gazette_retrieved.txt"
 
 class GazetteDataSource(IDataSource):
     def __init__(self):
+        self.retrieved = None
         self.load()
         self.updating = False
 
