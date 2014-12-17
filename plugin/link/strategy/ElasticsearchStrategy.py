@@ -55,5 +55,6 @@ class SearchText(Resource):
     @apiRequest
     @ensureRequestArgs(["query"])
     def render_GET(self, request):
-        ln.info("Search requested, query=%s" % request.args["query"])
-        return json.dumps(self.strategy.searchFullText(request.args["query"]), indent=4)
+        query = request.args["query"][0]
+        ln.info("Search requested, query=%s" % query)
+        return json.dumps(self.strategy.searchFullText(query), indent=4)
