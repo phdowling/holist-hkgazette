@@ -19,7 +19,7 @@ core_control_port = 11571
 strategyregisterport = 1158
 
 link_node_ip = "localhost"
-link_node_port = 80
+link_node_port = 8082
 link_node_control_port = 60112
 
 dblocation = "localhost"
