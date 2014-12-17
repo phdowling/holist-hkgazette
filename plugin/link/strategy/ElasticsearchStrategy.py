@@ -40,7 +40,7 @@ class ElasticearchStrategy(Resource, ILinkStrategy):
                                                     "multi_match": {
                                                         "query": query,
                                                         "fields": ["subject", "text"],
-                                                        "fuzziness": "AUTO"
+                                                        "fuzziness": 3
                                                     }
                                                 }
                                             }
