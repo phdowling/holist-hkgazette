@@ -9,9 +9,9 @@
  */
 
 /* Configs */
-var indexName = "holist-gazette.new_documents"; //Ex: twitter
-var docType = "string"; //Ex: tweet
+var indexName = "search"; //Ex: twitter
+var docType = "subject_text"; //Ex: tweet
 var maxResultsSize = 30;
 var host = "lamma.jmsc.hku.hk"; //Ex: http://ec2-123-aws.com
-var port = 9200;
+var port = 8082; //9200;
 var protocol = ""; //Default: same as browser
