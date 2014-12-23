@@ -9,7 +9,7 @@
  */
 
 /* Configs */
-var indexName = "api/search"; //Ex: twitter
+var indexName = "search"; //Ex: twitter
 var docType = "subject_text"; //Ex: tweet
 var maxResultsSize = 30;
 var host = "lamma.jmsc.hku.hk"; //Ex: http://ec2-123-aws.com

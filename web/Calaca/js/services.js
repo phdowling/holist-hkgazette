@@ -15,7 +15,7 @@ Calaca.factory('calacaService', ['$q', 'esFactory', '$location', function($q, el
     var esHost = (host.length > 0 ) ? host : $location.host();
     var esProtocol = (protocol.length > 0 ) ? protocol : $location.protocol();
 
-    var client = elasticsearch({ host: esProtocol + '://' + esHost + ":" + port });
+    var client = elasticsearch({ host: esProtocol + '://' + esHost + ":" + port + "/api"});
 
     var search = function(query, mode, offset){
 
