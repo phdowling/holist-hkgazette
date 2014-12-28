@@ -27,7 +27,9 @@ class ElasticearchStrategy(Resource, ILinkStrategy):
         silenceElasticsearch()
 
     def setupApi(self):
-        self.putChild("subject_text", SearchText(self))
+        res = Resource()
+        self.putChild("subject_text", res)
+        res.putChild("_search", SearchText(self))
 
     def getApiPath(self):
         return "search"
@@ -47,8 +49,8 @@ class ElasticearchStrategy(Resource, ILinkStrategy):
                                             )
         return results
 
-
 class SearchText(Resource):
+    isLeaf = True
     def __init__(self, strategy):
         self.strategy = strategy
 
@@ -57,4 +59,13 @@ class SearchText(Resource):
     def render_GET(self, request):
         query = request.args["query"][0]
         ln.info("Search requested, query=%s" % query)
+        return json.dumps(self.strategy.searchFullText(query), indent=4)
+
+class ESWrapper(Resource):
+    def __init__(self, strategy):
+        self.strategy = strategy
+
+    @apiRequest
+    def render_POST(self, request):
+        query = request
         return json.dumps(self.strategy.searchFullText(query), indent=4)

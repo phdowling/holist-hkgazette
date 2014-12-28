@@ -7,6 +7,7 @@ from backend.util import config
 from backend.core.model.Document import Document
 from pymongo import MongoClient
 
+import json
 
 loggers = []
 ## Central queue for log statements. Needed for sync under windows.
@@ -120,6 +121,9 @@ def moduleApiRequest(moduleName):
         return wrapped_render
     return apiRequest_
 
+# retrieve the value at a path in the dict, where the path to follow is specified by keys.
+dict_get = lambda d, keys: reduce(lambda d, key: d[key], keys, d)
+
 
 def ensureRequestArgs(arg_names):
     """
@@ -129,11 +133,19 @@ def ensureRequestArgs(arg_names):
         def wrapped_render(self, request):
             for arg_name in arg_names:
                 try:
-                    _ = request.args[arg_name]
-                except KeyError:
+                    if request.method == "GET":
+                        _ = request.args[arg_name]
+                    elif request.method == "POST":
+                        jsn = json.loads(request.content.read())
+                        _ = dict_get(jsn, arg_name.split("."))
+                except (KeyError, TypeError):
                     request.setResponseCode(400)
                     ln.error("Couldn't parse request arg %s." % arg_name)
                     return "Couldn't parse request arg %s." % arg_name
+                except ValueError:
+                    request.setResponseCode(400)
+                    ln.error("Couldn't parse request content as json.")
+                    return "Couldn't parse request content as json."
                 return render(self, request)
         return wrapped_render
     return ensureArgsDecorator
