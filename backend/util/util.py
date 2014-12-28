@@ -138,7 +138,7 @@ def ensureRequestArgs(*arg_names):
     """
     def ensureArgsDecorator(render):
         def wrapped_render(self, request):
-            args = None
+
             if request.method == "GET":
                 args = request.args
             elif request.method == "POST":
@@ -160,11 +160,11 @@ def ensureRequestArgs(*arg_names):
                     request.setResponseCode(400)
                     ln.error("Couldn't parse request arg %s." % arg_name)
                     return "Couldn't parse request arg %s." % arg_name
-                try:
-                    assert len(parsed_args) == len(arg_names)
-                except AssertionError:
-                    request.setResponseCode(400)
-                    return "Could not parse all the required args (need %s)" % (arg_names,)
-                return render(self, *parsed_args)
+            try:
+                assert len(parsed_args) == len(arg_names)
+            except AssertionError:
+                request.setResponseCode(400)
+                return "Could not parse all the required args (need %s, read args %s)" % (arg_names, parsed_args)
+            return render(self, *parsed_args)
         return wrapped_render
     return ensureArgsDecorator
