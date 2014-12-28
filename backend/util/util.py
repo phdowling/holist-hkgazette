@@ -128,19 +128,21 @@ def moduleApiRequest(moduleName, post=False):
 dict_get = lambda d, keys: reduce(lambda d, key: d[key], keys, d)
 
 
-def ensureRequestArgs(arg_names):
+def ensureRequestArgs(*arg_names):
     """
     return a dectorator for twisted request handlers that ensures args are present
     """
     def ensureArgsDecorator(render):
         def wrapped_render(self, request):
+            args = []
             for arg_name in arg_names:
                 try:
                     if request.method == "GET":
-                        _ = request.args[arg_name]
+                        arg = request.args[arg_name]
                     elif request.method == "POST":
                         jsn = json.loads(request.content.read())
-                        _ = dict_get(jsn, arg_name.split("."))
+                        arg = dict_get(jsn, arg_name.split("."))
+                    args.append(arg)
                 except (KeyError, TypeError):
                     request.setResponseCode(400)
                     ln.error("Couldn't parse request arg %s." % arg_name)
@@ -149,6 +151,6 @@ def ensureRequestArgs(arg_names):
                     request.setResponseCode(400)
                     ln.error("Couldn't parse request content as json.")
                     return "Couldn't parse request content as json."
-                return render(self, request)
+                return render(self, *args)
         return wrapped_render
     return ensureArgsDecorator
