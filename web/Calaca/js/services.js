@@ -37,7 +37,7 @@ Calaca.factory('calacaService', ['$q', 'esFactory', '$location', function($q, el
                 var i = 0, hitsIn, hitsOut = [];
                 hitsIn = (result.hits || {}).hits || [];
                 for(;i < hitsIn.length; i++){
-                    hitsOut.push(hitsIn[i]._source);
+                    hitsOut.push(hitsIn[i]);
                 }
                 deferred.resolve({ timeTook: result.took, hitsCount: result.hits.total, hits: hitsOut });
         }, deferred.reject);
