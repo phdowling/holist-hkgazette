@@ -8,7 +8,7 @@ from elasticsearch import Elasticsearch
 from twisted.web.resource import Resource
 from backend.util import config
 
-from backend.util.util import ensureRequestArgs, moduleApiRequest, dict_get
+from backend.util.util import getArgsFromRequest, moduleApiRequest, dict_get
 import json
 
 apiRequest = moduleApiRequest(__name__)
@@ -50,6 +50,9 @@ class ElasticearchStrategy(Resource, ILinkStrategy):
                                                 "from": from_
                                             }
                                             )
+        for result in results:
+            ln.debug("%s", result)
+            ln.debug("%s", type(result))
         return results
 
 class SearchText(Resource):
@@ -58,13 +61,13 @@ class SearchText(Resource):
         self.strategy = strategy
 
     @apiRequest
-    @ensureRequestArgs("query")
+    @getArgsFromRequest("query")
     def render_GET(self, query):
         ln.info("Search requested, query=%s" % query)
         return json.dumps(self.strategy.searchFullText(query), indent=4)
 
     @apiPOSTRequest
-    @ensureRequestArgs("size", "from", "query.query_string.query")
+    @getArgsFromRequest("size", "from", "query.query_string.query")
     def render_POST(self, size, from_, query):
         ln.debug(query)
         return json.dumps(self.strategy.searchFullText(query, size=size, from_=from_), indent=4)

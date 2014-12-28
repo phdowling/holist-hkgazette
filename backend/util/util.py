@@ -132,7 +132,7 @@ def moduleApiRequest(moduleName, post=False):
 dict_get = lambda d, keys: reduce(lambda d, key: d[key], keys, d)
 
 
-def ensureRequestArgs(*arg_names):
+def getArgsFromRequest(*arg_names):
     """
     return a dectorator for twisted request handlers that ensures args are present
     """
