@@ -29,7 +29,7 @@
     <p class='no-results' ng-show='!results.length && !loading'>No Results</p>
     <article class='result' ng-repeat='result in results track by $id(result)'>
       <h2>{{result._source.subject}}</h2>
-      <p>{{result.highlight.text.join("...")}}</p>
+      <p>{{result.highlight.text.join(" ... ")}}</p>
       <a href="{{result.archive_url}}">{{result._source.archive_url}}</a>
     </article>
   </section>

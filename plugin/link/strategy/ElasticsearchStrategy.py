@@ -43,7 +43,7 @@ class ElasticearchStrategy(Resource, ILinkStrategy):
                                                     "multi_match": {
                                                         "query": query,
                                                         "fields": ["subject", "text"],
-                                                        "fuzziness": 3
+                                                        "fuzziness": 1
                                                     }
                                                 },
                                                 "highlight": {
