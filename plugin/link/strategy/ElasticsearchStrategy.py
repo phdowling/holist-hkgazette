@@ -63,8 +63,9 @@ class SearchText(Resource):
         return json.dumps(self.strategy.searchFullText(query), indent=4)
 
     @apiPOSTRequest
-    @ensureRequestArgs(["query.query_string.query"])
+    #@ensureRequestArgs(["query.query_string.query"])
     def render_POST(self, request):
+        ln.debug("%s ... %s", request.args, type(request.args))
         args = json.loads(request.args)
         query = dict_get(args, ["query", "query_string", "query"])
         return json.dumps(self.strategy.searchFullText(query), indent=4)
