@@ -139,10 +139,12 @@ def ensureRequestArgs(*arg_names):
                 try:
                     if request.method == "GET":
                         arg = request.args[arg_name]
+                        args.append(arg)
                     elif request.method == "POST":
                         jsn = json.loads(request.content.read())
                         arg = dict_get(jsn, arg_name.split("."))
-                    args.append(arg)
+                        args.append(arg)
+
                 except (KeyError, TypeError):
                     request.setResponseCode(400)
                     ln.error("Couldn't parse request arg %s." % arg_name)
@@ -151,6 +153,7 @@ def ensureRequestArgs(*arg_names):
                     request.setResponseCode(400)
                     ln.error("Couldn't parse request content as json.")
                     return "Couldn't parse request content as json."
+                assert len(args) == len(arg_names)
                 return render(self, *args)
         return wrapped_render
     return ensureArgsDecorator
