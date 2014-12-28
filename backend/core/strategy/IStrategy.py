@@ -1,10 +1,4 @@
 class IStrategy(object):
-    def __init__(self):
-        raise Exception("Not implemented!")
-
-    def getNumFeatures(self):
-        return Exception("Not implemented!")
-
     def handleDocument(self, document):
         raise Exception("Not implemented!")
 
