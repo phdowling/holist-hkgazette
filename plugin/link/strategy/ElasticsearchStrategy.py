@@ -12,6 +12,7 @@ from backend.util.util import ensureRequestArgs, moduleApiRequest
 import json
 
 apiRequest = moduleApiRequest(__name__)
+apiPOSTRequest = moduleApiRequest(__name__, post=True)
 
 def silenceElasticsearch():
         import logging
@@ -65,7 +66,7 @@ class ESWrapper(Resource):
     def __init__(self, strategy):
         self.strategy = strategy
 
-    @apiRequest
+    @apiPOSTRequest
     def render_POST(self, request):
         query = request
         return json.dumps(self.strategy.searchFullText(query), indent=4)

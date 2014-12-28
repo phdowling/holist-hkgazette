@@ -103,7 +103,7 @@ def __refreshLog(name):
         pass
 
 
-def moduleApiRequest(moduleName):
+def moduleApiRequest(moduleName, post=False):
     """
     create a decorator that adds basic logging, enables remote access for a resource, and sets the content-type to json
     """
@@ -116,7 +116,10 @@ def moduleApiRequest(moduleName):
             ln_.debug("Got request from %s for %s, args=%s" % (request.getClientIP(), request.uri, request.args))
             request.setHeader("content-type", "application/json")
             request.setHeader('Access-Control-Allow-Origin', '*')
-            request.setHeader('Access-Control-Allow-Methods', 'GET')
+            if post:
+                request.setHeader('Access-Control-Allow-Methods', 'POST')
+            else:
+                request.setHeader('Access-Control-Allow-Methods', 'GET')
             return render_func(self, request)
         return wrapped_render
     return apiRequest_
