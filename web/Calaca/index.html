@@ -29,7 +29,6 @@
     <p class='no-results' ng-show='!results.length && !loading'>No Results</p>
     <article class='result' ng-repeat='result in results track by $id(result)'>
       <h2>{{result._source.subject}}</h2>
-      <p></p>
       <div ng-bind-html="result.highlight.text.join(' ... ')"></div>
       <a target=_blank href="{{result._source.archive_url}}">{{result._source.archive_url}}</a>
     </article>
@@ -45,6 +44,7 @@
 <script src='bower_components/elasticsearch/elasticsearch.angular.min.js' type='text/javascript'></script>
 <script src='js/config.js' type='text/javascript'></script>
 <script src='js/app.js' type='text/javascript'></script>
+<script type='text/javascript'>app.filter('unsafe', function($sce) { return $sce.trustAsHtml; });</script>
 <script src='js/controllers.js' type='text/javascript'></script>
 <script src='js/services.js' type='text/javascript'></script>
 </body>
