@@ -134,26 +134,30 @@ def ensureRequestArgs(*arg_names):
     """
     def ensureArgsDecorator(render):
         def wrapped_render(self, request):
-            args = []
-            for arg_name in arg_names:
+            if request.method == "GET":
+                args = request.args
+            if request.method == "POST":
                 try:
-                    if request.method == "GET":
-                        arg = request.args[arg_name]
-                        args.append(arg)
-                    elif request.method == "POST":
-                        jsn = json.loads(request.content.read())
-                        arg = dict_get(jsn, arg_name.split("."))
-                        args.append(arg)
-
-                except (KeyError, TypeError):
-                    request.setResponseCode(400)
-                    ln.error("Couldn't parse request arg %s." % arg_name)
-                    return "Couldn't parse request arg %s." % arg_name
+                    args = json.loads(request.content.read())
                 except ValueError:
                     request.setResponseCode(400)
                     ln.error("Couldn't parse request content as json.")
                     return "Couldn't parse request content as json."
-                assert len(args) == len(arg_names)
-                return render(self, *args)
+
+            parsed_args = []
+            for arg_name in arg_names:
+                try:
+                    arg = dict_get(args, arg_name.split("."))
+                    parsed_args.append(arg)
+                except (KeyError, TypeError):
+                    request.setResponseCode(400)
+                    ln.error("Couldn't parse request arg %s." % arg_name)
+                    return "Couldn't parse request arg %s." % arg_name
+                try:
+                    assert len(parsed_args) == len(arg_names)
+                except AssertionError:
+                    request.setResponseCode(400)
+                    return "Could not parse all the required args (need %s)" % (arg_names,)
+                return render(self, *parsed_args)
         return wrapped_render
     return ensureArgsDecorator
