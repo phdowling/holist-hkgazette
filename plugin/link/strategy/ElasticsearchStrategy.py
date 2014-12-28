@@ -46,13 +46,16 @@ class ElasticearchStrategy(Resource, ILinkStrategy):
                                                         "fuzziness": 3
                                                     }
                                                 },
+                                                "highlight": {
+                                                    "fields": {
+                                                        "text": {}
+                                                    }
+                                                },
                                                 "size": size,
                                                 "from": from_
                                             }
                                             )
-        for result in results:
-            ln.debug("%s", result)
-            ln.debug("%s", type(result))
+
         return results
 
 class SearchText(Resource):
