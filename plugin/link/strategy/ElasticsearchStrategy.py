@@ -35,7 +35,7 @@ class ElasticearchStrategy(Resource, ILinkStrategy):
     def getApiPath(self):
         return "search"
 
-    def searchFullText(self, query):
+    def searchFullText(self, query, size=None, from_=0):
         results = self.elasticsearch.search(index="%s.%s" % (config.dbname, "new_documents"),
                                             body={
                                                 "query":
@@ -45,7 +45,9 @@ class ElasticearchStrategy(Resource, ILinkStrategy):
                                                         "fields": ["subject", "text"],
                                                         "fuzziness": 3
                                                     }
-                                                }
+                                                },
+                                                "size": size,
+                                                "from": from_
                                             }
                                             )
         return results
@@ -62,7 +64,7 @@ class SearchText(Resource):
         return json.dumps(self.strategy.searchFullText(query), indent=4)
 
     @apiPOSTRequest
-    @ensureRequestArgs("query.query_string.query")
-    def render_POST(self, query):
+    @ensureRequestArgs("size","from", "query.query_string.query")
+    def render_POST(self, size, from_, query):
         ln.debug(query)
-        return json.dumps(self.strategy.searchFullText(query), indent=4)
+        return json.dumps(self.strategy.searchFullText(query, size=size, from_=from_), indent=4)
