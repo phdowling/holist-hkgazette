@@ -27,6 +27,7 @@ body {
 
 em {
     color: #000;
+    font-weight: bold;
 }
 
 .title {
@@ -101,7 +102,7 @@ em {
   margin-right: auto;
   background-color: #fff;
   border-radius: 5px;
-  color: #636363;
+  color: #8A8A8A;
 }
 .pagination-controls {
   width: 860px;
