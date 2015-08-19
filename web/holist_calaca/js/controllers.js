@@ -32,6 +32,7 @@ Calaca.controller('calacaCtrl', ['calacaService', '$scope', '$location', functio
         }
         $scope.getTextValue = function () {
             if (window.location.hash){
+                $scope.query = window.location.hash.substring(1);
                 return window.location.hash.substring(1);
             } else{
                 return "";
