@@ -24,15 +24,8 @@ Calaca.controller('calacaCtrl', ['calacaService', '$scope', '$location', functio
         var paginationTriggered;
 
         $scope.testhash = function(m){
-            if(window.location.hash) {
-               var hash = window.location.hash.substring(1); //Puts hash in variable, and removes the # character
-                alert (hash);
-                // hash found
-            } else {
-                // No hash found
-                alert("No hash! m is " + m);
-            }
             window.location.hash = $scope.query;
+            search(m);
         }
 
         //On search, reinitialize array, then perform search and load results
