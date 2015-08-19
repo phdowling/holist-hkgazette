@@ -76,9 +76,16 @@ Calaca.controller('calacaCtrl', ['calacaService', '$scope', '$location', functio
             return paginationTriggered ? true : false;
         };
 
+        function escapeRegExp(string) {
+           return string.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
+        }
+        function replaceAll(string, find, replace) {
+            return string.replace(new RegExp(escapeRegExp(find), 'g'), replace);
+        }
+
         if (window.location.hash){
             console.log("window.location.hash is not null");
-            $scope.query = window.location.hash.substring(1).replace("%20", " ");
+            $scope.query = replaceAll(window.location.hash.substring(1), "%20", " ");
             console.log("Calling search now");
             $scope.search(0);
         }
