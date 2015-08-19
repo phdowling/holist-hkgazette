@@ -23,6 +23,21 @@ Calaca.controller('calacaCtrl', ['calacaService', '$scope', '$location', functio
 
         var paginationTriggered;
 
+        $scope.getPlaceholder = function () {
+            if (window.location.hash){
+                return window.location.hash
+            } else{
+                return "Search"
+            }
+        }
+        $scope.getTextValue = function () {
+            if (window.location.hash){
+                return window.location.hash
+            } else{
+                return ""
+            }
+        }
+
         //On search, reinitialize array, then perform search and load results
         $scope.search = function(m){
             console.log("search(" + m +"). Query: " + $scope.query);
