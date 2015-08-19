@@ -25,9 +25,9 @@ Calaca.controller('calacaCtrl', ['calacaService', '$scope', '$location', functio
 
         //On search, reinitialize array, then perform search and load results
         $scope.search = function(m){
-            console.log("search(" + m +").");
-            //window.location.hash = $scope.query;
-            console.log($scope.query);
+            console.log("search(" + m +"). Query: " + $scope.query);
+            window.location.hash = $scope.query;
+
             $scope.results = [];
             $scope.offset = m == 0 ? 0 : $scope.offset;//Clear offset if new query
             $scope.loading = m == 0 ? false : true;//Reset loading flag if new query
