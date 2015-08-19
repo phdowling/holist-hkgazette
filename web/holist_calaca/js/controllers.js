@@ -25,16 +25,16 @@ Calaca.controller('calacaCtrl', ['calacaService', '$scope', '$location', functio
 
         $scope.getPlaceholder = function () {
             if (window.location.hash){
-                return window.location.hash
+                return window.location.hash.substring(1);
             } else{
-                return "Search"
+                return "Search";
             }
         }
         $scope.getTextValue = function () {
             if (window.location.hash){
-                return window.location.hash
+                return window.location.hash.substring(1);
             } else{
-                return ""
+                return "";
             }
         }
 
