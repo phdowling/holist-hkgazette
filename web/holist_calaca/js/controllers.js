@@ -23,13 +23,6 @@ Calaca.controller('calacaCtrl', ['calacaService', '$scope', '$location', functio
 
         var paginationTriggered;
 
-        if (window.location.hash){
-            console.log("window.location.hash is not null");
-            $scope.query = window.location.hash.substring(1).replace("%20", " ");
-            console.log("Calling search now");
-            $scope.search(0);
-        }
-
         //On search, reinitialize array, then perform search and load results
         $scope.search = function(m){
             console.log("search(" + m +"). Query: " + $scope.query);
@@ -82,6 +75,13 @@ Calaca.controller('calacaCtrl', ['calacaService', '$scope', '$location', functio
         $scope.paginationEnabled = function() {
             return paginationTriggered ? true : false;
         };
+
+        if (window.location.hash){
+            console.log("window.location.hash is not null");
+            $scope.query = window.location.hash.substring(1).replace("%20", " ");
+            console.log("Calling search now");
+            $scope.search(0);
+        }
 
 
     }]
