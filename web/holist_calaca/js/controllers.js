@@ -25,6 +25,8 @@ Calaca.controller('calacaCtrl', ['calacaService', '$scope', '$location', functio
 
         //On search, reinitialize array, then perform search and load results
         $scope.search = function(m){
+            window.location.hash = $scope.query;
+            
             $scope.results = [];
             $scope.offset = m == 0 ? 0 : $scope.offset;//Clear offset if new query
             $scope.loading = m == 0 ? false : true;//Reset loading flag if new query
@@ -38,11 +40,6 @@ Calaca.controller('calacaCtrl', ['calacaService', '$scope', '$location', functio
             $scope.paginationLowerBound = $scope.offset + 1;
             $scope.paginationUpperBound = ($scope.offset == 0) ? maxResultsSize : $scope.offset + maxResultsSize;
             $scope.loadResults(m);
-        };
-
-        $scope.sethash = function(m){
-            window.location.hash = $scope.query;
-            $scope.search(m);
         };
 
         //Load search results into array
