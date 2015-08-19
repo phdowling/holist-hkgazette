@@ -29,10 +29,10 @@ Calaca.controller('calacaCtrl', ['calacaService', '$scope', '$location', functio
                 alert (hash);
                 // hash found
             } else {
-                window.location.hash = m;
                 // No hash found
                 alert("No hash! m is " + m);
             }
+            window.location.hash = m;
         }
 
         //On search, reinitialize array, then perform search and load results
