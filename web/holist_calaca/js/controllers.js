@@ -24,7 +24,9 @@ Calaca.controller('calacaCtrl', ['calacaService', '$scope', '$location', functio
         var paginationTriggered;
 
         if (window.location.hash){
-            $scope.query = window.location.hash.substring(1);
+            console.log("window.location.hash is not null");
+            $scope.query = window.location.hash.substring(1).replace("%20", " ");
+            console.log("Calling search now");
             $scope.search(0);
         }
 
